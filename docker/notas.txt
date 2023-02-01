@@ -1,0 +1,18 @@
+
+https://hub.docker.com/r/ubuntu/postgres
+
+
+Launch this image locally:
+docker run -d --name postgres-container -e TZ=UTC -p 5432:5432 -e POSTGRES_PASSWORD=root ubuntu/postgres:14-22.04_beta
+
+To debug the container:
+docker logs -f postgres-container
+
+To get an interactive shell:
+docker exec -it postgres-container /bin/bash
+
+This image also includes the psql client for interactive container use:
+
+$ docker network create postgres-network
+$ docker network connect postgres-network postgres-container
+$ docker run -it --rm --network postgres-network ubuntu/postgres:14-22.04_beta psql -h postgres-container -U postgres
